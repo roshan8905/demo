@@ -117,7 +117,7 @@ const updateComment = asyncHandler(async (req, res) => {
     }
 
     if(comment.owner.toString() !== userId.toString()) {
-        throw new ApiError(403, "You are not the owner of this comment")
+        throw new ApiError(403, "Comment can only be updated by the owner");
     }
 
     const updatedComment = await Comment.findByIdAndUpdate(commentId, { content }, { new: true });
@@ -142,7 +142,7 @@ const deleteComment = asyncHandler(async (req, res) => {
     }
 
     if(comment.owner.toString() !== userId.toString()) {
-        throw new ApiError(403, "You are not the owner of this comment")
+        throw new ApiError(403, "Comment can only be deleted by the owner");
     }
 
     await Comment.findByIdAndDelete(commentId);
