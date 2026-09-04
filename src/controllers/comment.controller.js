@@ -9,6 +9,8 @@ const getVideoComments = asyncHandler(async (req, res) => {
     //TODO: get all comments for a video
     const {videoId} = req.params
     const {page = 1, limit = 10} = req.query
+    const pageNumber = Number(page);
+    const limitNumber = Number(limit);
 
     if (!isValidObjectId(videoId)) {
         throw new ApiError(400, "Invalid Video ID");
@@ -49,10 +51,10 @@ const getVideoComments = asyncHandler(async (req, res) => {
             $sort: { createdAt: -1 }
         },
         {
-            $skip: (page - 1) * limit
+            $skip: (pageNumber - 1) * limitNumber
         },
         {
-            $limit: limit
+            $limit: limitNumber
         }
     ])
 
